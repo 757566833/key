@@ -31,11 +31,10 @@ func main() {
 	// Generate a Bip32 HD wallet for the mnemonic and a user supplied password
 	mnemonic := "thrive member govern lake wealth alley theory divert roast screen poet maximum"
 	seed := bip39.NewSeed(mnemonic, "")
-
+	rootKey, _ := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
 	// p2wpkh
-	p2wpkhKey, _ := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
 
-	p2wpkhFirst, _ := p2wpkhKey.Derive(hdkeychain.HardenedKeyStart + 84)
+	p2wpkhFirst, _ := rootKey.Derive(hdkeychain.HardenedKeyStart + 84)
 	p2wpkhSecond, _ := p2wpkhFirst.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2wpkhThird, _ := p2wpkhSecond.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2wpkhPre, _ := p2wpkhThird.Derive(0)
@@ -50,8 +49,7 @@ func main() {
 	fmt.Println("---")
 
 	// p2sh-p2wpkh
-	p2shP2wpkhKey, _ := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
-	p2shP2wpkhFirst, _ := p2shP2wpkhKey.Derive(hdkeychain.HardenedKeyStart + 49)
+	p2shP2wpkhFirst, _ := rootKey.Derive(hdkeychain.HardenedKeyStart + 49)
 	p2shP2wpkhSecond, _ := p2shP2wpkhFirst.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2shP2wpkhThird, _ := p2shP2wpkhSecond.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2shP2wpkhPre, _ := p2shP2wpkhThird.Derive(0)
@@ -67,8 +65,7 @@ func main() {
 	fmt.Println("---")
 
 	// p2tr
-	p2trKey, _ := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
-	p2trFirst, _ := p2trKey.Derive(hdkeychain.HardenedKeyStart + 86)
+	p2trFirst, _ := rootKey.Derive(hdkeychain.HardenedKeyStart + 86)
 	p2trSecond, _ := p2trFirst.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2trThird, _ := p2trSecond.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2trPre, _ := p2trThird.Derive(0)
@@ -83,9 +80,7 @@ func main() {
 	fmt.Println("---")
 
 	// p2pkh
-	p2pkhKey, _ := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
-
-	p2pkhFirst, _ := p2pkhKey.Derive(hdkeychain.HardenedKeyStart + 44)
+	p2pkhFirst, _ := rootKey.Derive(hdkeychain.HardenedKeyStart + 44)
 	p2pkhSecond, _ := p2pkhFirst.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2pkhThird, _ := p2pkhSecond.Derive(hdkeychain.HardenedKeyStart + 0)
 	p2pkhPre, _ := p2pkhThird.Derive(0)
