@@ -67,18 +67,18 @@ const addressTypes = async () => {
       console.log("---")
 
       // 和unisat 保持一致
-      const p2shChildNode3 = rootKey.derivePath(`${P2SH_Path}0`);
-      const p2shPayment2 = bitcoin.payments.p2sh({ redeem: bitcoin.payments.p2wpkh({ pubkey: p2shChildNode3.publicKey }) });
-      console.log(p2shPayment2.address)
-      console.log("p2sh格式生成的公钥为：", p2shChildNode3.publicKey.toString('hex'))
-      console.log("p2sh格式生成的地址为：", p2shPayment2.address)
+      const p2shP2wpkhChildNode3 = rootKey.derivePath(`${P2SH_Path}0`);
+      const p2shP2wpkhPayment2 = bitcoin.payments.p2sh({ redeem: bitcoin.payments.p2wpkh({ pubkey: p2shP2wpkhChildNode3.publicKey }) });
+      console.log("p2sh-p2wpkh格式生成的公钥为：", p2shP2wpkhChildNode3.publicKey.toString('hex'))
+      console.log("p2sh-p2wpkh格式生成的地址为：", p2shP2wpkhPayment2.address)
       console.log("---")
 
       // 和unisat 保持一致
       const p2trChildNode = rootKey.derivePath(`${P2TR_Path}0`);
+      console.log(p2trChildNode.publicKey)
       let internalPubkey = p2trChildNode.publicKey.subarray(1, 33)
       const p2trPayment = bitcoin.payments.p2tr({ internalPubkey });
-      console.log("p2tr格式生成的公钥为：", p2trPayment.pubkey?.toString('hex'))
+      console.log("p2tr格式生成的公钥为：", p2trChildNode.publicKey.toString('hex'))
       console.log("p2tr格式生成的地址为：", p2trPayment.address)
       console.log("---")
 
@@ -106,7 +106,7 @@ const addressTypes = async () => {
       });
 
 }
-// addressTypes();
+
 
 const test = async () => {
       const seed = await bip39.mnemonicToSeed(mnemonic);
@@ -124,7 +124,7 @@ const test = async () => {
 
 
 }
-test();
+addressTypes().then(test);
 
 // 在交易中 是将公钥生成 script 进行广播
 // 大体格式如下
