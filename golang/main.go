@@ -74,7 +74,7 @@ func main() {
 	p2trPre, _ := p2trThird.Derive(0)
 	p2trFull, _ := p2trPre.Derive(0)
 	p2trPub, _ := p2trFull.ECPubKey()
-	p2trPubHex := fmt.Sprintf("%x", p2shP2wpkhPub.SerializeCompressed())
+	p2trPubHex := fmt.Sprintf("%x", p2trPub.SerializeCompressed())
 	fmt.Println("p2tr格式生成的公钥为：", p2trPubHex)
 	p2trTapKey := txscript.ComputeTaprootKeyNoScript(p2trPub)
 	p2trBytes := p2trTapKey.SerializeCompressed()[1:33]

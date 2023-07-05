@@ -75,7 +75,6 @@ const addressTypes = async () => {
 
       // 和unisat 保持一致
       const p2trChildNode = rootKey.derivePath(`${P2TR_Path}0`);
-      console.log(p2trChildNode.publicKey)
       let internalPubkey = p2trChildNode.publicKey.subarray(1, 33)
       const p2trPayment = bitcoin.payments.p2tr({ internalPubkey });
       console.log("p2tr格式生成的公钥为：", p2trChildNode.publicKey.toString('hex'))
